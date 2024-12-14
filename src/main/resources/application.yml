@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: jobs-api
+
+api:
+  key: ${API_KEY}
+  url: ${API_URL}
+
