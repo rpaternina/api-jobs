@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Service
 @RequiredArgsConstructor
@@ -52,8 +51,19 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public Mono<Api> saveJob(Api api){
-        return Mono.fromCallable(()-> apiRepository.save(api))
-                .subscribeOn(Schedulers.boundedElastic());
+    public Mono<Api> saveJob(ApiDTO apiDTO){
+
+        if(apiDTO.getJobs() != null){
+            apiDTO.getJobs().forEach(
+                    job -> {
+                        Api api = Api.builder()
+                                .title(job.getTitle())
+                                .companyName(job.getCompanyName())
+                                .applyLink(job.getApplyLink())
+                                .build();
+                        apiRepository.save(api);
+                    });
+        }
+        return null;
     }
 }

@@ -9,5 +9,5 @@ public interface ApiService {
 
     Flux<ApiDTO> jobs(String engine, String q);
 
-    Mono<Api> saveJob(Api api);
+    Mono<Api> saveJob(ApiDTO apiDTO);
 }

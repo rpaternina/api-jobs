@@ -25,9 +25,8 @@ public class ApiController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Api>> save(@RequestBody Api api){
-        return apiService.saveJob(api)
-                .map(savedApi -> new ResponseEntity<>(savedApi, HttpStatus.CREATED))
-                .defaultIfEmpty(ResponseEntity.badRequest().build());
+    public Mono<ResponseEntity<String>> save(@RequestBody ApiDTO apiDTO){
+        apiService.saveJob(apiDTO);
+        return Mono.just(new ResponseEntity<> ("Datos guardados con exito" ,HttpStatus.CREATED));
     }
 }
